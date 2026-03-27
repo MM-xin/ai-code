@@ -1,10 +1,26 @@
 spring:
   application:
     name: ai-code
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ai_code?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  session:
+    timeout: 86400
 server:
   port: 8088
   servlet:
     context-path: /api
+
+# MyBatis-Flex配置
+mybatis-flex:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    normal-value-of-logic-delete: 0
+    deleted-value-of-logic-delete: 1
 
 # springdoc-openapi????
 springdoc:
