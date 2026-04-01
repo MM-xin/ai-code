@@ -18,10 +18,10 @@ public class UserQueryRequest extends PageRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户ID
+     * 用户ID（前端雪花ID为字符串，用String接收避免精度丢失）
      */
     @Schema(description = "用户ID")
-    private Long id;
+    private String id;
 
     /**
      * 账号

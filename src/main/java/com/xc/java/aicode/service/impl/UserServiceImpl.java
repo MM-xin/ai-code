@@ -34,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private static final String SALT = "xc_aicode";
 
     @Override
-    public long userRegister(String userAccount, String userPassword, String checkPassword) {
+    public long userRegister(String userAccount, String userPassword, String checkPassword, String userName) {
         // 1. 校验参数
         if (StrUtil.hasBlank(userAccount, userPassword, checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
@@ -65,6 +65,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setId(SnowflakeUtils.nextId());
         user.setUserAccount(userAccount);
         user.setUserPassword(encryptPassword);
+        // 昵称为空时默认设置为"无名"
+        user.setUserName(StrUtil.isNotBlank(userName) ? userName : "无名");
         user.setUserRole(UserConstant.USER_ROLE); // 默认普通用户，值为2
         boolean saveResult = this.save(user);
         if (!saveResult) {
@@ -151,9 +153,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         long pageNum = userQueryRequest.getPageNum();
         long pageSize = userQueryRequest.getPageSize();
 
-        // 构建查询条件
+        // 构建查询条件，id 从 String 转 Long 避免前端雪花ID精度丢失问题
+        Long idVal = null;
+        if (StrUtil.isNotBlank(userQueryRequest.getId())) {
+            idVal = Long.parseLong(userQueryRequest.getId());
+        }
         QueryWrapper queryWrapper = QueryWrapper.create()
-                .where(USER.ID.eq(userQueryRequest.getId(), userQueryRequest.getId() != null))
+                .where(USER.ID.eq(idVal, idVal != null))
                 .and(USER.USER_ACCOUNT.like(userQueryRequest.getUserAccount(), StrUtil.isNotBlank(userQueryRequest.getUserAccount())))
                 .and(USER.USER_NAME.like(userQueryRequest.getUserName(), StrUtil.isNotBlank(userQueryRequest.getUserName())))
                 .and(USER.USER_ROLE.eq(userQueryRequest.getUserRole(), userQueryRequest.getUserRole() != null))

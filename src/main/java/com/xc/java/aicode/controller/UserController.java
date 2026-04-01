@@ -56,7 +56,7 @@ public class UserController {
         if (StrUtil.hasBlank(userAccount, userPassword, checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        long result = userService.userRegister(userAccount, userPassword, checkPassword);
+        long result = userService.userRegister(userAccount, userPassword, checkPassword, userRegisterRequest.getUserName());
         return ResultUtils.success(result);
     }
 

@@ -1,5 +1,6 @@
 package com.xc.java.aicode.model.entity;
 
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
@@ -51,5 +52,6 @@ public class Role implements Serializable {
     /**
      * 是否删除（逻辑删除）
      */
+    @Column(isLogicDelete = true)
     private Integer isDelete;
 }
