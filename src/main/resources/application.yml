@@ -8,6 +8,8 @@ spring:
     password: root
   session:
     timeout: 86400
+  profiles:
+    active: local
 server:
   port: 8088
   servlet:
@@ -35,3 +37,13 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
+
+# langchain4j
+langchain4j:
+  open-ai:
+    chat-model:
+      base-url: https://api.deepseek.com
+      api-key: ${deepseek.api-key}
+      model-name: deepseek-chat
+      log-requests: true
+      log-responses: true
