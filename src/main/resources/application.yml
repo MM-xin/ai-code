@@ -24,7 +24,7 @@ mybatis-flex:
     normal-value-of-logic-delete: 0
     deleted-value-of-logic-delete: 1
 
-# springdoc-openapi????
+# springdoc-openapi
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -32,7 +32,7 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.xc.java.aicode.controller
-# knife4j???????????????
+# knife4j
 knife4j:
   enable: true
   setting:
