@@ -14,7 +14,7 @@ import java.util.List;
 class AiCodeGeneratorFacadeTest {
 
     @Resource
-    private  AiCodeGeneratorFacade aiCodeGenerator;
+    private  AiCodeGeneratorFacadeV2 aiCodeGenerator;
 
     @Test
     void generateAndSaveCode() {
