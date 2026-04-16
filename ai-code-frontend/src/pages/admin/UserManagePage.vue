@@ -6,7 +6,7 @@
 import { ref, reactive, computed, onMounted, h } from 'vue'
 import { message, Modal } from 'ant-design-vue'
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons-vue'
-import { listUserByPage, deleteUser, updateUser } from '@/api/yonghuguanli'
+import { listUserByPage, deleteUser, updateUser } from '@/api/user'
 
 // 角色映射
 const roleMap: Record<number, { label: string; color: string }> = {

@@ -2,11 +2,13 @@
 /* eslint-disable */
 // API 更新时间：
 // API 唯一标识：
-import * as yonghuguanli from './yonghuguanli'
-import * as jiaoseguanli from './jiaoseguanli'
+import * as appController from './appController'
+import * as user from './user'
+import * as role from './role'
 import * as apiController from './apiController'
 export default {
-  yonghuguanli,
-  jiaoseguanli,
+  appController,
+  user,
+  role,
   apiController,
 }

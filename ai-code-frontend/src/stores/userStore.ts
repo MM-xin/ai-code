@@ -4,7 +4,7 @@
  */
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getLoginUser } from '@/api/yonghuguanli'
+import { getLoginUser } from '@/api/user'
 
 export const useUserStore = defineStore('user', () => {
   // 当前登录用户信息，null 表示未登录

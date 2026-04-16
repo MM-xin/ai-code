@@ -7,7 +7,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import type { MenuProps } from 'ant-design-vue'
-import { userLogout } from '@/api/yonghuguanli'
+import { userLogout } from '@/api/user'
 import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()

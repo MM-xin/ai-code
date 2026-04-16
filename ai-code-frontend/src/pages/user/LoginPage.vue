@@ -6,7 +6,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
-import { userLogin } from '@/api/yonghuguanli'
+import { userLogin } from '@/api/user'
 import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()

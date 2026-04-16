@@ -29,7 +29,7 @@ import jakarta.annotation.Resource;
 @RestController
 @RequestMapping("/role")
 @Slf4j
-@Tag(name = "角色管理")
+@Tag(name = "role", description = "角色管理")
 public class RoleController {
 
     @Resource

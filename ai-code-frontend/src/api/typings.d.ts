@@ -1,4 +1,20 @@
 declare namespace API {
+  type App = {
+    id?: number
+    appName?: string
+    cover?: string
+    initPrompt?: string
+    codeGenType?: string
+    deployKey?: string
+    deployedTime?: string
+    priority?: number
+    userId?: number
+    editTime?: string
+    createTime?: string
+    updateTime?: string
+    isDelete?: number
+  }
+
   type BaseResponseBoolean = {
     code?: number
     data?: boolean
@@ -39,12 +55,29 @@ declare namespace API {
     id?: number
   }
 
+  type getInfoParams = {
+    id: number
+  }
+
   type getRoleByIdParams = {
     id: number
   }
 
   type getUserByIdParams = {
     id: number
+  }
+
+  type PageApp = {
+    records?: App[]
+    pageNumber?: number
+    pageSize?: number
+    totalPage?: number
+    totalRow?: number
+    optimizeCountQuery?: boolean
+  }
+
+  type pageParams = {
+    page: PageApp
   }
 
   type PageRoleVO = {
@@ -63,6 +96,10 @@ declare namespace API {
     totalPage?: number
     totalRow?: number
     optimizeCountQuery?: boolean
+  }
+
+  type removeParams = {
+    id: number
   }
 
   type RoleAddRequest = {

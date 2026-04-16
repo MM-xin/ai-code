@@ -30,7 +30,7 @@ import jakarta.annotation.Resource;
 @RestController
 @RequestMapping("/user")
 @Slf4j
-@Tag(name = "用户管理")
+@Tag(name = "user", description = "用户管理")
 public class UserController {
 
     @Resource
