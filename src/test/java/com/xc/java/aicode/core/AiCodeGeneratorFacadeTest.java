@@ -13,24 +13,24 @@ import java.util.List;
 @SpringBootTest
 class AiCodeGeneratorFacadeTest {
 
-    @Resource
+    @Resource(name = "aiCodeGeneratorFacadeV2")
     private  AiCodeGeneratorFacadeV2 aiCodeGenerator;
 
     @Test
     void generateAndSaveCode() {
-        File file = aiCodeGenerator.generateAndSaveCode("做个简单闹钟页面，不超过三十行", CodeGenTypeEnum.HTML);
+        File file = aiCodeGenerator.generateAndSaveCode("做个简单闹钟页面，不超过三十行", CodeGenTypeEnum.HTML, 1L);
         Assertions.assertNotNull(file);
     }
 
     @Test
     void generateAndSaveCode2() {
-        File file = aiCodeGenerator.generateAndSaveCode("做个简单闹钟页面，不超过三十行", CodeGenTypeEnum.MULTI_FILE);
+        File file = aiCodeGenerator.generateAndSaveCode("做个简单闹钟页面，不超过三十行", CodeGenTypeEnum.MULTI_FILE, 1L);
         Assertions.assertNotNull(file);
     }
 
     @Test
     void generateAndSaveCodeStream() {
-        Flux<String> codeStream = aiCodeGenerator.generateAndSaveCodeStream("做个简单登录页面，不超过三十行", CodeGenTypeEnum.HTML);
+        Flux<String> codeStream = aiCodeGenerator.generateAndSaveCodeStream("做个简单登录页面，不超过三十行", CodeGenTypeEnum.HTML, 1L);
         // 阻塞等待所有数据收集完成
         List<String> result = codeStream.collectList().block();
         Assertions.assertNotNull(result);
@@ -41,7 +41,7 @@ class AiCodeGeneratorFacadeTest {
 
     @Test
     void generateAndSaveCodeStream2() {
-        Flux<String> codeStream = aiCodeGenerator.generateAndSaveCodeStream("做个简单登录页面，不超过三十行", CodeGenTypeEnum.MULTI_FILE);
+        Flux<String> codeStream = aiCodeGenerator.generateAndSaveCodeStream("做个简单登录页面，不超过三十行", CodeGenTypeEnum.MULTI_FILE, 1L);
         // 阻塞等待所有数据收集完成
         List<String> result = codeStream.collectList().block();
         Assertions.assertNotNull(result);
