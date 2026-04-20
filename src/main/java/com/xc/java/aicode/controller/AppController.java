@@ -14,10 +14,7 @@ import com.xc.java.aicode.constant.UserConstant;
 import com.xc.java.aicode.exception.BusinessException;
 import com.xc.java.aicode.exception.ErrorCode;
 import com.xc.java.aicode.exception.ThrowUtils;
-import com.xc.java.aicode.model.dto.app.AppAdminUpdateRequest;
-import com.xc.java.aicode.model.dto.app.AppAddRequest;
-import com.xc.java.aicode.model.dto.app.AppQueryRequest;
-import com.xc.java.aicode.model.dto.app.AppUserUpdateRequest;
+import com.xc.java.aicode.model.dto.app.*;
 import com.xc.java.aicode.model.entity.App;
 import com.xc.java.aicode.model.entity.User;
 import com.xc.java.aicode.model.enums.CodeGenTypeEnum;
@@ -77,6 +74,29 @@ public class AppController {
                                 .data("")
                                 .build()
                 ));
+    }
+
+    /**
+     * 应用部署
+     *
+     * @param appDeployRequest 部署请求
+     * @param request          请求
+     * @return 部署 URL
+     */
+    @PostMapping("/deploy")
+    public BaseResponse<String> deployApp(@RequestBody AppDeployRequest appDeployRequest, HttpServletRequest request) {
+        // 检查部署请求是否为空
+        ThrowUtils.throwIf(appDeployRequest == null, ErrorCode.PARAMS_ERROR);
+        // 获取应用 ID
+        Long appId = appDeployRequest.getAppId();
+        // 检查应用 ID 是否为空
+        ThrowUtils.throwIf(appId == null || appId <= 0, ErrorCode.PARAMS_ERROR, "应用 ID 不能为空");
+        // 获取当前登录用户
+        User loginUser = userService.getLoginUser(request);
+        // 调用服务部署应用
+        String deployUrl = appService.deployApp(appId, loginUser);
+        // 返回部署 URL
+        return ResultUtils.success(deployUrl);
     }
 
     /**
