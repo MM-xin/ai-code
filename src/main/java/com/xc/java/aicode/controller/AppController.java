@@ -21,6 +21,7 @@ import com.xc.java.aicode.model.enums.CodeGenTypeEnum;
 import com.xc.java.aicode.model.vo.AppVO;
 import com.xc.java.aicode.service.AppService;
 import com.xc.java.aicode.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,6 +50,7 @@ public class AppController {
     private UserService userService;
 
     @GetMapping(value = "/chat/gen/code", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @Operation(summary = "流式生成代码", description = "根据提示词流式生成应用代码（SSE）")
     public Flux<ServerSentEvent<String>> chatToGenCode(@RequestParam Long appId,
                                                        @RequestParam String message,
                                                        HttpServletRequest request) {
@@ -84,6 +86,7 @@ public class AppController {
      * @return 部署 URL
      */
     @PostMapping("/deploy")
+    @Operation(summary = "部署应用", description = "将应用代码部署并返回访问 URL")
     public BaseResponse<String> deployApp(@RequestBody AppDeployRequest appDeployRequest, HttpServletRequest request) {
         // 检查部署请求是否为空
         ThrowUtils.throwIf(appDeployRequest == null, ErrorCode.PARAMS_ERROR);
@@ -107,6 +110,7 @@ public class AppController {
      * @return 应用 id
      */
     @PostMapping("/add")
+    @Operation(summary = "创建应用")
     public BaseResponse<Long> addApp(@RequestBody AppAddRequest appAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(appAddRequest == null, ErrorCode.PARAMS_ERROR);
         // 参数校验
@@ -136,6 +140,7 @@ public class AppController {
      * @return 更新结果
      */
     @PostMapping("/update")
+    @Operation(summary = "更新应用", description = "用户只能更新自己的应用名称")
     public BaseResponse<Boolean> updateApp(@RequestBody AppUserUpdateRequest appUserUpdateRequest, HttpServletRequest request) {
         if (appUserUpdateRequest == null || appUserUpdateRequest.getId() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -167,6 +172,7 @@ public class AppController {
      * @return 删除结果
      */
     @PostMapping("/delete")
+    @Operation(summary = "删除应用", description = "用户只能删除自己的应用")
     public BaseResponse<Boolean> deleteApp(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -191,6 +197,7 @@ public class AppController {
      * @return 应用详情
      */
     @GetMapping("/get/vo")
+    @Operation(summary = "获取应用详情")
     public BaseResponse<AppVO> getAppVOById(long id) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
@@ -208,6 +215,7 @@ public class AppController {
      * @return 应用列表
      */
     @PostMapping("/my/list/page/vo")
+    @Operation(summary = "分页获取我的应用列表")
     public BaseResponse<Page<AppVO>> listMyAppVOByPage(@RequestBody AppQueryRequest appQueryRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(appQueryRequest == null, ErrorCode.PARAMS_ERROR);
         User loginUser = userService.getLoginUser(request);
@@ -233,6 +241,7 @@ public class AppController {
      * @return 精选应用列表
      */
     @PostMapping("/good/list/page/vo")
+    @Operation(summary = "分页获取精选应用列表")
     public BaseResponse<Page<AppVO>> listGoodAppVOByPage(@RequestBody AppQueryRequest appQueryRequest) {
         ThrowUtils.throwIf(appQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 限制每页最多 20 个
@@ -259,6 +268,7 @@ public class AppController {
      */
     @PostMapping("/admin/delete")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @Operation(summary = "管理员删除应用")
     public BaseResponse<Boolean> deleteAppByAdmin(@RequestBody DeleteRequest deleteRequest) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -279,6 +289,7 @@ public class AppController {
      */
     @PostMapping("/admin/update")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @Operation(summary = "管理员更新应用")
     public BaseResponse<Boolean> updateAppByAdmin(@RequestBody AppAdminUpdateRequest appAdminUpdateRequest) {
         if (appAdminUpdateRequest == null || appAdminUpdateRequest.getId() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -303,7 +314,8 @@ public class AppController {
      * @return 应用列表
      */
     @PostMapping("/admin/list/page/vo")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE) // UserConstant.ADMIN_ROLE = 1
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @Operation(summary = "管理员分页获取应用列表")
     public BaseResponse<Page<AppVO>> listAppVOByPageByAdmin(@RequestBody AppQueryRequest appQueryRequest) {
         ThrowUtils.throwIf(appQueryRequest == null, ErrorCode.PARAMS_ERROR);
         long pageNum = appQueryRequest.getPageNum();
@@ -325,6 +337,7 @@ public class AppController {
      */
     @GetMapping("/admin/get/vo")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @Operation(summary = "管理员根据ID获取应用详情")
     public BaseResponse<AppVO> getAppVOByIdByAdmin(long id) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库

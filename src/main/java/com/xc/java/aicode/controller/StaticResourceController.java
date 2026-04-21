@@ -1,6 +1,8 @@
 package com.xc.java.aicode.controller;
 
 import com.xc.java.aicode.constant.AppConstant;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -20,6 +22,7 @@ import java.io.File;
  */
 @RestController
 @RequestMapping("/static")
+@Tag(name = "staticResource", description = "静态资源访问接口")
 public class StaticResourceController {
 
     // 应用生成根目录（用于浏览）
@@ -30,6 +33,7 @@ public class StaticResourceController {
      * 访问格式：http://localhost:8088/api/static/{deployKey}[/{fileName}]
      */
     @GetMapping("/{deployKey}/**")
+    @Operation(summary = "访问静态资源", description = "根据 deployKey 访问已部署应用的静态文件")
     public ResponseEntity<Resource> serveStaticResource(
             @PathVariable String deployKey,
             HttpServletRequest request) {
