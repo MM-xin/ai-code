@@ -7,7 +7,9 @@ import GlobalFooter from '@/components/GlobalFooter.vue'
   <a-layout class="basic-layout">
     <GlobalHeader />
     <a-layout-content class="main-content">
-      <router-view />
+      <slot>
+        <router-view />
+      </slot>
     </a-layout-content>
     <GlobalFooter />
   </a-layout>

@@ -24,9 +24,10 @@ const menuItems = computed(() => {
   const items: MenuProps['items'] = [
     { key: '/', label: '首页', title: '首页' },
   ]
-  // 管理员才显示用户管理菜单
+  // 管理员才显示管理菜单
   if (userStore.isAdmin()) {
     items.push({ key: '/admin/user', label: '用户管理', title: '用户管理' })
+    items.push({ key: '/admin/appManage', label: '应用管理', title: '应用管理' })
   }
   return items
 })

@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, RouterView } from 'vue-router'
 import BasicLayout from '@/layouts/BasicLayout.vue'
+
+const route = useRoute()
+// AppChatPage 是全屏页面，不使用 BasicLayout
+const useBasicLayout = computed(() => !route.path.startsWith('/app/chat'))
 </script>
 
 <template>
-  <BasicLayout>
+  <BasicLayout v-if="useBasicLayout">
     <RouterView />
   </BasicLayout>
+  <RouterView v-else />
 </template>

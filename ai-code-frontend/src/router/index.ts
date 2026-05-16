@@ -6,7 +6,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { useUserStore } from '@/stores/userStore'
-import HomeView from '@/pages/HomeView.vue'
+import HomePage from '@/pages/HomePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: HomePage,
     },
     {
       path: '/user/login',
@@ -27,11 +27,26 @@ const router = createRouter({
       component: () => import('@/pages/user/RegisterPage.vue'),
     },
     {
-      // 用户管理页面，仅管理员可访问
       path: '/admin/user',
       name: 'userManage',
       component: () => import('@/pages/admin/UserManagePage.vue'),
       meta: { requireAdmin: true },
+    },
+    {
+      path: '/admin/appManage',
+      name: 'appManage',
+      component: () => import('@/pages/admin/AppManagePage.vue'),
+      meta: { requireAdmin: true },
+    },
+    {
+      path: '/app/chat/:id',
+      name: 'appChat',
+      component: () => import('@/pages/app/AppChatPage.vue'),
+    },
+    {
+      path: '/app/edit/:id',
+      name: 'appEdit',
+      component: () => import('@/pages/app/AppEditPage.vue'),
     },
   ],
 })
